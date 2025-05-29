@@ -28,7 +28,7 @@ const initialSuggestions = [
   "¿Cumple con VeriFactu?",
   "¿Qué tipos de facturas puedo hacer?",
   "¿Puedo facturar desde el móvil?",
-  "¿Qué incluye el timbre?",
+  "¿Qué incluye el envío VERI*FACTU?",
   "¿Mis datos están seguros?",
 ]
 

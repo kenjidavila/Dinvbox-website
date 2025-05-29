@@ -78,7 +78,7 @@ export default function DashboardPage() {
             value="timbres"
             className="rounded-md data-[state=active]:bg-navy-50 data-[state=active]:text-navy-900"
           >
-            Timbres
+            Envíos VERI*FACTU
           </TabsTrigger>
         </TabsList>
 
@@ -126,7 +126,7 @@ export default function DashboardPage() {
               transition={{ duration: 0.3, delay: 0.3 }}
             >
               <StatsCard
-                title="IVA a declarar"
+                title="Envíos VERI*FACTU"
                 value="667,80 €"
                 description="Trimestre actual"
                 icon={<Calculator className="h-5 w-5 text-purple-600" />}
@@ -203,10 +203,10 @@ export default function DashboardPage() {
           >
             <Card className="border-0 shadow-lg overflow-hidden">
               <CardHeader className="bg-white px-6 py-4 border-b border-gray-100">
-                <CardTitle className="text-lg font-medium text-navy-900">Compra de Timbres</CardTitle>
+                <CardTitle className="text-lg font-medium text-navy-900">Envíos VERI*FACTU</CardTitle>
               </CardHeader>
               <CardContent className="p-6">
-                <p className="text-gray-600 mb-6">Adquiere timbres para continuar facturando</p>
+                <p className="text-gray-600 mb-6">Adquiere envíos VERI*FACTU para continuar facturando</p>
                 <div className="grid gap-6 md:grid-cols-3">
                   <TimbrePackage title="Paquete Básico" count={10} price="8€" unitPrice="0,80€" />
                   <TimbrePackage title="Paquete Estándar" count={30} price="15€" unitPrice="0,50€" highlighted />
@@ -242,10 +242,10 @@ export default function DashboardPage() {
         <TabsContent value="timbres">
           <Card className="border-0 shadow-lg">
             <CardHeader>
-              <CardTitle>Timbres</CardTitle>
+              <CardTitle>Envíos VERI*FACTU</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-gray-600">Gestión de timbres en desarrollo.</p>
+              <p className="text-gray-600">Gestión de envíos VERI*FACTU en desarrollo.</p>
             </CardContent>
           </Card>
         </TabsContent>
@@ -305,8 +305,8 @@ function TimbrePackage({
         <h3 className="text-lg font-medium text-navy-900 mb-4">{title}</h3>
         <div className="text-center mb-4">
           <p className="text-5xl font-bold text-navy-900">{count}</p>
-          <p className="text-sm text-gray-500">timbres</p>
-          <p className="text-xs text-gray-500">({unitPrice} por timbre)</p>
+          <p className="text-sm text-gray-500">envíos</p>
+          <p className="text-xs text-gray-500">({unitPrice} por envío)</p>
         </div>
         <p className="text-2xl font-bold text-center text-navy-900 mb-6">{price}</p>
         <Button

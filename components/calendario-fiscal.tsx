@@ -31,30 +31,53 @@ const formatearFecha = (fecha: Date): string => {
   return fecha.toLocaleDateString("es-ES", opciones)
 }
 
+// Función para verificar si un evento está vencido
+const estaVencido = (fecha: Date): boolean => {
+  const hoy = new Date()
+  // Establecer las horas, minutos, segundos y milisegundos a 0 para comparar solo fechas
+  hoy.setHours(0, 0, 0, 0)
+  const fechaEvento = new Date(fecha)
+  fechaEvento.setHours(0, 0, 0, 0)
+  return fechaEvento < hoy
+}
+
 // Componente para un evento fiscal individual
 const EventoFiscal = ({ evento }: { evento: EventoFiscalType }) => {
+  const vencido = estaVencido(evento.fecha)
   const estaProximo = (): boolean => {
     const hoy = new Date()
     const diferenciaDias = Math.ceil((evento.fecha.getTime() - hoy.getTime()) / (1000 * 60 * 60 * 24))
-    return diferenciaDias <= 7
+    return diferenciaDias <= 7 && diferenciaDias >= 0
   }
 
   return (
-    <div className="flex items-center justify-between p-4 hover:bg-gray-50 transition-colors rounded-lg">
+    <div
+      className={`flex items-center justify-between p-4 hover:bg-gray-50 transition-colors rounded-lg ${vencido ? "bg-gray-50" : ""}`}
+    >
       <div className="flex items-center">
         <div
           className={`h-10 w-10 rounded-full flex items-center justify-center mr-4 
-            ${evento.urgente || estaProximo() ? "bg-red-100 text-red-600" : "bg-blue-100 text-blue-600"}`}
+            ${
+              vencido
+                ? "bg-gray-100 text-gray-500"
+                : evento.urgente || estaProximo()
+                  ? "bg-red-100 text-red-600"
+                  : "bg-blue-100 text-blue-600"
+            }`}
         >
           <span className="font-semibold text-sm">{evento.fecha.getDate()}</span>
         </div>
         <div>
-          <p className="font-medium text-navy-800">{evento.descripcion}</p>
+          <p className={`font-medium ${vencido ? "text-gray-500" : "text-navy-800"}`}>{evento.descripcion}</p>
           <p className="text-sm text-gray-500">{formatearFecha(evento.fecha)}</p>
         </div>
       </div>
-      {(evento.urgente || estaProximo()) && (
-        <Badge className="bg-red-100 text-red-600 border-red-200">{estaProximo() ? "Próximo" : "Urgente"}</Badge>
+      {vencido ? (
+        <Badge className="bg-gray-100 text-gray-600 border-gray-200">Vencido</Badge>
+      ) : (
+        (evento.urgente || estaProximo()) && (
+          <Badge className="bg-red-100 text-red-600 border-red-200">{estaProximo() ? "Próximo" : "Urgente"}</Badge>
+        )
       )}
     </div>
   )

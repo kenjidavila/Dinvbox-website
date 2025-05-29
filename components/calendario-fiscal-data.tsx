@@ -342,7 +342,6 @@ export const eventosFiscales: EventoFiscal[] = [
     fecha: crearFecha(21, 4, 2025),
     descripcion: "Modelo 349 – Operaciones intracomunitarias 1T 2025",
     modelo: "349",
-    tipo: "sociedades",
   },
 
   // Julio

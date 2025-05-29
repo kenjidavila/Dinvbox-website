@@ -11,6 +11,7 @@ import {
   isSameMonth,
   isSameDay,
   isToday,
+  isBefore,
 } from "date-fns"
 import { es } from "date-fns/locale"
 import { ChevronLeft, ChevronRight, CalendarIcon, List, Grid, X } from "lucide-react"
@@ -18,9 +19,20 @@ import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 // Importamos los tipos y datos del calendario fiscal
 import { eventosFiscales, type EventoFiscal, type TipoContribuyente } from "@/components/calendario-fiscal-data"
+
+// Función para verificar si un evento está vencido
+const estaVencido = (fecha: Date): boolean => {
+  const hoy = new Date()
+  // Establecer las horas, minutos, segundos y milisegundos a 0 para comparar solo fechas
+  hoy.setHours(0, 0, 0, 0)
+  const fechaEvento = new Date(fecha)
+  fechaEvento.setHours(0, 0, 0, 0)
+  return fechaEvento < hoy
+}
 
 // Componente para un día del calendario
 const CalendarDay = ({
@@ -39,11 +51,13 @@ const CalendarDay = ({
   const isCurrentMonth = isSameMonth(day, currentMonth)
   const isSelected = isSameDay(day, selectedDate)
   const isTodayDate = isToday(day)
+  const isPastDate = isBefore(day, new Date()) && !isTodayDate
 
   // Verificar si hay eventos para este día
   const eventosDelDia = eventos.filter((evento) => isSameDay(evento.fecha, day))
 
   const hasUrgentEvent = eventosDelDia.some((evento) => evento.urgente)
+  const hasVencidoEvent = eventosDelDia.some((evento) => estaVencido(evento.fecha))
 
   return (
     <div
@@ -51,6 +65,7 @@ const CalendarDay = ({
         ${!isCurrentMonth ? "text-gray-300" : ""}
         ${isSelected ? "bg-orange-500 text-white" : ""}
         ${isTodayDate && !isSelected ? "border border-orange-500" : ""}
+        ${isPastDate && !isSelected ? "text-gray-400" : ""}
         ${isCurrentMonth && !isSelected ? "hover:bg-gray-100 cursor-pointer" : ""}
       `}
       onClick={() => (isCurrentMonth ? setSelectedDate(day) : null)}
@@ -59,7 +74,8 @@ const CalendarDay = ({
         {day.getDate()}
         {eventosDelDia.length > 0 && !isSelected && (
           <div
-            className={`absolute -bottom-3 left-1/2 transform -translate-x-1/2 h-1 w-1 rounded-full ${hasUrgentEvent ? "bg-red-500" : "bg-orange-400"}`}
+            className={`absolute -bottom-3 left-1/2 transform -translate-x-1/2 h-1 w-1 rounded-full 
+              ${hasVencidoEvent ? "bg-gray-400" : hasUrgentEvent ? "bg-red-500" : "bg-orange-400"}`}
           ></div>
         )}
       </div>
@@ -69,16 +85,29 @@ const CalendarDay = ({
 
 // Componente para un evento en la vista de agenda
 const EventoItem = ({ evento }: { evento: EventoFiscal }) => {
+  const vencido = estaVencido(evento.fecha)
+
   return (
     <div
-      className={`p-3 rounded-lg mb-2 border-l-4 ${evento.urgente ? "border-l-red-500 bg-red-50" : "border-l-orange-400 bg-orange-50"}`}
+      className={`p-3 rounded-lg mb-2 border-l-4 
+        ${
+          vencido
+            ? "border-l-gray-400 bg-gray-50"
+            : evento.urgente
+              ? "border-l-red-500 bg-red-50"
+              : "border-l-orange-400 bg-orange-50"
+        }`}
     >
       <div className="flex justify-between items-start">
         <div>
-          <p className="font-medium">{evento.descripcion}</p>
+          <p className={`font-medium ${vencido ? "text-gray-500" : ""}`}>{evento.descripcion}</p>
           <p className="text-sm text-gray-500">Modelo {evento.modelo}</p>
         </div>
-        {evento.urgente && <Badge className="bg-red-100 text-red-600 border-red-200">Urgente</Badge>}
+        {vencido ? (
+          <Badge className="bg-gray-100 text-gray-600 border-gray-200">Vencido</Badge>
+        ) : (
+          evento.urgente && <Badge className="bg-red-100 text-red-600 border-red-200">Urgente</Badge>
+        )}
       </div>
     </div>
   )
@@ -98,6 +127,7 @@ export default function IOSCalendar({
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [viewMode, setViewMode] = useState<"calendar" | "agenda">("calendar")
   const [tipoContribuyente, setTipoContribuyente] = useState<TipoContribuyente>(initialTipoContribuyente)
+  const [mostrarVencidos, setMostrarVencidos] = useState<boolean>(true)
 
   // Resetear la fecha seleccionada cuando se abre el modal
   useEffect(() => {
@@ -107,8 +137,12 @@ export default function IOSCalendar({
     }
   }, [open])
 
-  // Filtrar eventos por tipo de contribuyente
-  const eventosFiltrados = eventosFiscales.filter((evento) => evento.tipo === tipoContribuyente)
+  // Filtrar eventos por tipo de contribuyente y estado de vencimiento
+  const eventosFiltrados = eventosFiscales.filter((evento) => {
+    const cumpleTipo = evento.tipo === tipoContribuyente
+    const cumpleVencimiento = mostrarVencidos || !estaVencido(evento.fecha)
+    return cumpleTipo && cumpleVencimiento
+  })
 
   // Obtener eventos para la fecha seleccionada
   const eventosDelDia = eventosFiltrados.filter((evento) => isSameDay(evento.fecha, selectedDate))
@@ -186,7 +220,7 @@ export default function IOSCalendar({
         </div>
 
         <div className="p-4">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3">
             <div className="flex items-center space-x-2">
               <Tabs
                 defaultValue={tipoContribuyente}
@@ -210,6 +244,23 @@ export default function IOSCalendar({
             </div>
 
             <div className="flex items-center space-x-2">
+              <ToggleGroup
+                type="single"
+                value={mostrarVencidos ? "todos" : "pendientes"}
+                onValueChange={(value) => {
+                  if (value) setMostrarVencidos(value === "todos")
+                }}
+              >
+                <ToggleGroupItem value="todos" aria-label="Mostrar todos los eventos">
+                  Todos
+                </ToggleGroupItem>
+                <ToggleGroupItem value="pendientes" aria-label="Solo pendientes">
+                  Solo pendientes
+                </ToggleGroupItem>
+              </ToggleGroup>
+
+              <div className="border-l h-6 mx-2 border-gray-200"></div>
+
               <Button
                 variant="ghost"
                 size="icon"
@@ -273,7 +324,9 @@ export default function IOSCalendar({
                     .map((evento) => (
                       <div key={evento.id} className="flex items-start">
                         <div className="w-12 text-center mr-4">
-                          <div className="font-bold">{format(evento.fecha, "d")}</div>
+                          <div className={`font-bold ${estaVencido(evento.fecha) ? "text-gray-400" : ""}`}>
+                            {format(evento.fecha, "d")}
+                          </div>
                           <div className="text-xs text-gray-500">{format(evento.fecha, "EEE", { locale: es })}</div>
                         </div>
                         <EventoItem evento={evento} />
@@ -309,9 +362,13 @@ export default function IOSCalendar({
               <div className="h-3 w-3 rounded-full bg-red-500 mr-1"></div>
               <span>Urgente</span>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center mr-4">
               <div className="h-3 w-3 rounded-full bg-orange-400 mr-1"></div>
               <span>Normal</span>
+            </div>
+            <div className="flex items-center">
+              <div className="h-3 w-3 rounded-full bg-gray-400 mr-1"></div>
+              <span>Vencido</span>
             </div>
           </div>
           <Button variant="default" size="sm" className="bg-orange-500 hover:bg-orange-600" onClick={onClose}>

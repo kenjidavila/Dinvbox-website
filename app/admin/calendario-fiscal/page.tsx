@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState, useEffect } from "react"
 import { format, parseISO } from "date-fns"
-import { Edit, Trash2, Plus, Search, AlertTriangle } from "lucide-react"
+import { Edit, Trash2, Plus, Search, AlertTriangle, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -27,6 +27,16 @@ import {
   type TipoModelo,
 } from "@/components/calendario-fiscal-data"
 
+// Función para verificar si un evento está vencido
+const estaVencido = (fecha: Date): boolean => {
+  const hoy = new Date()
+  // Establecer las horas, minutos, segundos y milisegundos a 0 para comparar solo fechas
+  hoy.setHours(0, 0, 0, 0)
+  const fechaEvento = new Date(fecha)
+  fechaEvento.setHours(0, 0, 0, 0)
+  return fechaEvento < hoy
+}
+
 export default function CalendarioFiscalAdmin() {
   // Estado para almacenar los eventos
   const [eventos, setEventos] = useState<EventoFiscal[]>(eventosFiscales)
@@ -37,6 +47,7 @@ export default function CalendarioFiscalAdmin() {
   const [tipoFiltro, setTipoFiltro] = useState<TipoContribuyente | "todos">("todos")
   const [modeloFiltro, setModeloFiltro] = useState<string>("todos")
   const [urgenteFiltro, setUrgenteFiltro] = useState<boolean | null>(null)
+  const [vencidoFiltro, setVencidoFiltro] = useState<boolean | null>(null)
 
   // Estados para el modal de edición/creación
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -106,11 +117,16 @@ export default function CalendarioFiscalAdmin() {
       filtered = filtered.filter((evento) => evento.urgente === urgenteFiltro)
     }
 
+    // Filtrar por estado de vencimiento
+    if (vencidoFiltro !== null) {
+      filtered = filtered.filter((evento) => estaVencido(evento.fecha) === vencidoFiltro)
+    }
+
     // Ordenar por fecha
     filtered.sort((a, b) => a.fecha.getTime() - b.fecha.getTime())
 
     setFilteredEventos(filtered)
-  }, [eventos, searchTerm, tipoFiltro, modeloFiltro, urgenteFiltro])
+  }, [eventos, searchTerm, tipoFiltro, modeloFiltro, urgenteFiltro, vencidoFiltro])
 
   // Función para abrir el modal de edición
   const handleEdit = (evento: EventoFiscal) => {
@@ -219,7 +235,7 @@ export default function CalendarioFiscalAdmin() {
           <CardTitle className="text-lg">Filtros</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
               <Label htmlFor="search">Buscar</Label>
               <div className="relative">
@@ -285,6 +301,27 @@ export default function CalendarioFiscalAdmin() {
                 </SelectContent>
               </Select>
             </div>
+
+            <div>
+              <Label htmlFor="vencido">Estado</Label>
+              <Select
+                value={vencidoFiltro === null ? "todos" : vencidoFiltro ? "vencido" : "pendiente"}
+                onValueChange={(value) => {
+                  if (value === "todos") setVencidoFiltro(null)
+                  else if (value === "vencido") setVencidoFiltro(true)
+                  else setVencidoFiltro(false)
+                }}
+              >
+                <SelectTrigger id="vencido">
+                  <SelectValue placeholder="Seleccionar estado" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="todos">Todos</SelectItem>
+                  <SelectItem value="vencido">Vencido</SelectItem>
+                  <SelectItem value="pendiente">Pendiente</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -303,53 +340,61 @@ export default function CalendarioFiscalAdmin() {
                   <th className="text-left py-3 px-4 font-medium text-gray-500">Descripción</th>
                   <th className="text-left py-3 px-4 font-medium text-gray-500">Modelo</th>
                   <th className="text-left py-3 px-4 font-medium text-gray-500">Tipo</th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-500">Urgencia</th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-500">Estado</th>
                   <th className="text-right py-3 px-4 font-medium text-gray-500">Acciones</th>
                 </tr>
               </thead>
               <tbody className="divide-y">
-                {filteredEventos.map((evento) => (
-                  <tr key={evento.id} className="hover:bg-gray-50">
-                    <td className="py-3 px-4">{format(evento.fecha, "dd/MM/yyyy")}</td>
-                    <td className="py-3 px-4">{evento.descripcion}</td>
-                    <td className="py-3 px-4">
-                      <Badge variant="outline" className="bg-gray-100">
-                        {evento.modelo}
-                      </Badge>
-                    </td>
-                    <td className="py-3 px-4">
-                      <Badge
-                        className={
-                          evento.tipo === "autonomos"
-                            ? "bg-blue-100 text-blue-600 border-blue-200"
-                            : "bg-green-100 text-green-600 border-green-200"
-                        }
-                      >
-                        {evento.tipo === "autonomos" ? "Autónomos" : "Sociedades"}
-                      </Badge>
-                    </td>
-                    <td className="py-3 px-4">
-                      {evento.urgente ? (
-                        <Badge className="bg-red-100 text-red-600 border-red-200">
-                          <AlertTriangle className="h-3 w-3 mr-1" />
-                          Urgente
+                {filteredEventos.map((evento) => {
+                  const vencido = estaVencido(evento.fecha)
+                  return (
+                    <tr key={evento.id} className={`hover:bg-gray-50 ${vencido ? "bg-gray-50" : ""}`}>
+                      <td className="py-3 px-4">{format(evento.fecha, "dd/MM/yyyy")}</td>
+                      <td className={`py-3 px-4 ${vencido ? "text-gray-500" : ""}`}>{evento.descripcion}</td>
+                      <td className="py-3 px-4">
+                        <Badge variant="outline" className="bg-gray-100">
+                          {evento.modelo}
                         </Badge>
-                      ) : (
-                        <Badge className="bg-gray-100 text-gray-600 border-gray-200">Normal</Badge>
-                      )}
-                    </td>
-                    <td className="py-3 px-4 text-right">
-                      <div className="flex justify-end gap-2">
-                        <Button variant="ghost" size="icon" onClick={() => handleEdit(evento)}>
-                          <Edit className="h-4 w-4 text-gray-500" />
-                        </Button>
-                        <Button variant="ghost" size="icon" onClick={() => handleDeleteConfirm(evento)}>
-                          <Trash2 className="h-4 w-4 text-red-500" />
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                      </td>
+                      <td className="py-3 px-4">
+                        <Badge
+                          className={
+                            evento.tipo === "autonomos"
+                              ? "bg-blue-100 text-blue-600 border-blue-200"
+                              : "bg-green-100 text-green-600 border-green-200"
+                          }
+                        >
+                          {evento.tipo === "autonomos" ? "Autónomos" : "Sociedades"}
+                        </Badge>
+                      </td>
+                      <td className="py-3 px-4">
+                        {vencido ? (
+                          <Badge className="bg-gray-100 text-gray-600 border-gray-200">
+                            <Clock className="h-3 w-3 mr-1" />
+                            Vencido
+                          </Badge>
+                        ) : evento.urgente ? (
+                          <Badge className="bg-red-100 text-red-600 border-red-200">
+                            <AlertTriangle className="h-3 w-3 mr-1" />
+                            Urgente
+                          </Badge>
+                        ) : (
+                          <Badge className="bg-green-100 text-green-600 border-green-200">Pendiente</Badge>
+                        )}
+                      </td>
+                      <td className="py-3 px-4 text-right">
+                        <div className="flex justify-end gap-2">
+                          <Button variant="ghost" size="icon" onClick={() => handleEdit(evento)}>
+                            <Edit className="h-4 w-4 text-gray-500" />
+                          </Button>
+                          <Button variant="ghost" size="icon" onClick={() => handleDeleteConfirm(evento)}>
+                            <Trash2 className="h-4 w-4 text-red-500" />
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                })}
                 {filteredEventos.length === 0 && (
                   <tr>
                     <td colSpan={6} className="py-8 text-center text-gray-500">
