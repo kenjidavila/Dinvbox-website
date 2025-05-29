@@ -41,32 +41,24 @@ export const knowledgeBase: KnowledgeEntry[] = [
     ],
   },
   {
-    question: "¿Y si me equivoco en una factura? ¿Pierdo el envío VERI*FACTU?",
+    question: "¿Y si me equivoco en una factura? ¿Pierdo el timbre?",
     answer:
-      "El envío VERI*FACTU ya usado no se recupera, pero puedes corregirlo con una rectificativa. Y la IA te avisa antes de cometer errores.",
+      "El timbre ya usado no se recupera, pero puedes corregirlo con una rectificativa. Y la IA te avisa antes de cometer errores.",
     keywords: [
       "error",
       "equivocación",
       "factura incorrecta",
       "rectificativa",
-      "envío VERI*FACTU",
+      "timbre",
       "corrección",
       "prevención de errores",
     ],
   },
   {
-    question: "¿Qué me incluye el envío VERI*FACTU que compro?",
+    question: "¿Qué me incluye el timbre que compro?",
     answer:
-      "Cada envío VERI*FACTU te permite emitir una factura que cumple con VeriFactu y se envía directamente a la AEAT. También se guarda todo en la nube.",
-    keywords: [
-      "envío VERI*FACTU",
-      "compra de envíos VERI*FACTU",
-      "verifactu",
-      "AEAT",
-      "envío",
-      "almacenamiento",
-      "nube",
-    ],
+      "Cada timbre te permite emitir una factura que cumple con VeriFactu y se envía directamente a la AEAT. También se guarda todo en la nube.",
+    keywords: ["timbre", "compra de timbres", "verifactu", "AEAT", "envío", "almacenamiento", "nube"],
   },
   {
     question: "¿Esto me sirve si facturo desde el móvil?",

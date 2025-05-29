@@ -28,7 +28,7 @@ export default function FAQPage() {
         {
           question: "¿Qué incluye el plan gratuito?",
           answer:
-            "El plan gratuito incluye 3 envíos VERI*FACTU, gestión básica de clientes, acceso desde cualquier dispositivo y soporte por email. Es perfecto para autónomos que están comenzando o tienen un volumen bajo de facturación. Las facturas emitidas cumplen con toda la normativa de la AEAT.",
+            "El plan gratuito incluye 3 facturas electrónicas con envío a VERI*FACTU, gestión básica de clientes, acceso desde cualquier dispositivo y soporte por email. Es perfecto para autónomos que están comenzando o tienen un volumen bajo de facturación. Las facturas emitidas cumplen con toda la normativa de la AEAT.",
         },
         {
           question: "¿Las facturas cumplen con la normativa de la AEAT?",
@@ -48,19 +48,19 @@ export default function FAQPage() {
       icon: <CreditCard className="h-5 w-5" />,
       questions: [
         {
-          question: "¿Qué es un Envío VERI*FACTU?",
+          question: "¿Qué es un timbre?",
           answer:
-            "Un Envío VERI*FACTU es el proceso por el cual nuestro sistema envía de forma segura y automática a la Agencia Tributaria (AEAT) los registros de facturación generados en el momento de emitir cada factura. Cada envío se realiza en formato XML estructurado y cifrado, cumpliendo con todos los requisitos técnicos de la AEAT. Cada vez que generas una factura, se realiza automáticamente un Envío VERI*FACTU.",
+            "Un timbre es la unidad que utilizamos para cada factura electrónica que emites. Cada vez que generas una factura, se consume un timbre de tu plan.",
         },
         {
-          question: "¿Los Envíos VERI*FACTU caducan?",
+          question: "¿Los timbres caducan?",
           answer:
-            "No, los Envíos VERI*FACTU que adquieres no caducan. Puedes utilizarlos cuando los necesites sin preocuparte por fechas límite. Una vez comprados, permanecen en tu cuenta hasta que los utilices para enviar facturas a la AEAT.",
+            "No, los timbres que adquieres no caducan. Puedes utilizarlos cuando los necesites sin preocuparte por fechas límite. Una vez comprados, permanecen en tu cuenta hasta que los utilices.",
         },
         {
           question: "¿Puedo cambiar de plan en cualquier momento?",
           answer:
-            "Sí, puedes cambiar de plan o adquirir más Envíos VERI*FACTU en cualquier momento según tus necesidades. No hay penalizaciones por cambiar entre planes.",
+            "Sí, puedes cambiar de plan o adquirir más timbres en cualquier momento según tus necesidades. No hay penalizaciones por cambiar entre planes.",
         },
         {
           question: "¿Hay costos ocultos?",
@@ -78,9 +78,9 @@ export default function FAQPage() {
             "No, el registro en el plan gratuito no requiere ninguna tarjeta de crédito ni datos bancarios. Puedes comenzar a usar DINVBOX sin ningún compromiso financiero. Solo te pediremos tus datos fiscales para poder emitir facturas correctamente.",
         },
         {
-          question: "¿Qué pasa si supero mis Envíos VERI*FACTU gratuitos?",
+          question: "¿Qué pasa si supero mis facturas gratuitas?",
           answer:
-            "Si consumes los 3 Envíos VERI*FACTU del plan gratuito, recibirás una notificación para actualizar a un plan de pago. No podrás realizar más envíos a la AEAT hasta que adquieras más Envíos VERI*FACTU, pero seguirás teniendo acceso a todas tus facturas anteriores. No hay cargos automáticos ni sorpresas.",
+            "Si consumes los 3 timbres VERI*FACTU del plan gratuito, recibirás una notificación para actualizar a un plan de pago. No podrás emitir más facturas hasta que adquieras más timbres, pero seguirás teniendo acceso a todas tus facturas anteriores. No hay cargos automáticos ni sorpresas.",
         },
       ],
     },

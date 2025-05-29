@@ -727,11 +727,9 @@ export default function Home() {
           <AnimatedSection className="text-center">
             <motion.div variants={fadeIn}>
               <h2 className="text-3xl font-bold tracking-tight text-navy-900 sm:text-4xl font-heading">
-                Envíos VERI*FACTU
+                Compra de Timbres
               </h2>
-              <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-                Adquiere envíos VERI*FACTU para continuar facturando
-              </p>
+              <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Adquiere timbres para continuar facturando</p>
             </motion.div>
           </AnimatedSection>
 
@@ -743,7 +741,7 @@ export default function Home() {
                   price="0€"
                   description="Ideal para autónomos que están empezando."
                   features={[
-                    "3 envíos VERI*FACTU incluidos",
+                    "3 timbres incluidos",
                     "Emisión de facturas electrónicas",
                     "Gestión básica de clientes",
                     "Acceso desde cualquier dispositivo",
@@ -761,9 +759,9 @@ export default function Home() {
                   title="Paquete Básico"
                   price="8€"
                   period=""
-                  description="10 envíos VERI*FACTU (€0,80 por envío)"
+                  description="10 timbres (€0,80 por timbre)"
                   features={[
-                    "10 envíos VERI*FACTU",
+                    "10 timbres",
                     "Emisión de facturas electrónicas",
                     "Gestión de clientes",
                     "Acceso desde cualquier dispositivo",
@@ -780,9 +778,9 @@ export default function Home() {
                   title="Paquete Estándar"
                   price="15€"
                   period=""
-                  description="30 envíos VERI*FACTU (€0,50 por envío)"
+                  description="30 timbres (€0,50 por timbre)"
                   features={[
-                    "30 envíos VERI*FACTU",
+                    "30 timbres",
                     "Emisión de facturas electrónicas",
                     "Gestión de clientes",
                     "Exportación de datos",
@@ -799,9 +797,9 @@ export default function Home() {
                   title="Paquete Premium"
                   price="23€"
                   period=""
-                  description="50 envíos VERI*FACTU (€0,46 por envío)"
+                  description="50 timbres (€0,46 por timbre)"
                   features={[
-                    "50 envíos VERI*FACTU",
+                    "50 timbres",
                     "Emisión de facturas electrónicas",
                     "Gestión de clientes",
                     "Informes y análisis avanzados",
@@ -879,9 +877,9 @@ export default function Home() {
                     ¿Qué pasa si supero mis facturas gratuitas?
                   </AccordionTrigger>
                   <AccordionContent className="text-gray-600">
-                    Si consumos los 3 envíos VERI*FACTU del plan gratuito, recibirás una notificación para actualizar a
-                    un plan de pago. No podrás emitir más facturas hasta que adquieras más envíos VERI*FACTU, pero
-                    seguirás teniendo acceso a todas tus facturas anteriores. No hay cargos automáticos ni sorpresas.
+                    Si consumos los 3 timbres VERI*FACTU del plan gratuito, recibirás una notificación para actualizar a
+                    un plan de pago. No podrás emitir más facturas hasta que adquieras más timbres, pero seguirás
+                    teniendo acceso a todas tus facturas anteriores. No hay cargos automáticos ni sorpresas.
                   </AccordionContent>
                 </AccordionItem>
 

@@ -133,7 +133,7 @@ export default function PreciosPage() {
                       <div className="flex-shrink-0 h-5 w-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
                         <CheckCircle className="h-3 w-3 text-green-600" />
                       </div>
-                      <span className="ml-3 text-gray-600">3 envíos VERI*FACTU incluidos</span>
+                      <span className="ml-3 text-gray-600">3 timbres incluidos</span>
                     </li>
                     <li className="flex items-start">
                       <div className="flex-shrink-0 h-5 w-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
@@ -184,14 +184,14 @@ export default function PreciosPage() {
                     </div>
                   </div>
 
-                  <p className="mt-4 text-center text-gray-600">10 envíos VERI*FACTU (€0,80 por envío)</p>
+                  <p className="mt-4 text-center text-gray-600">10 timbres (€0,80 por timbre)</p>
 
                   <ul className="mt-6 space-y-3">
                     <li className="flex items-start">
                       <div className="flex-shrink-0 h-5 w-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
                         <CheckCircle className="h-3 w-3 text-green-600" />
                       </div>
-                      <span className="ml-3 text-gray-600">10 envíos VERI*FACTU</span>
+                      <span className="ml-3 text-gray-600">10 timbres</span>
                     </li>
                     <li className="flex items-start">
                       <div className="flex-shrink-0 h-5 w-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
@@ -247,14 +247,14 @@ export default function PreciosPage() {
                     </div>
                   </div>
 
-                  <p className="mt-4 text-center text-gray-600">30 envíos VERI*FACTU (€0,50 por envío)</p>
+                  <p className="mt-4 text-center text-gray-600">30 timbres (€0,50 por timbre)</p>
 
                   <ul className="mt-6 space-y-3">
                     <li className="flex items-start">
                       <div className="flex-shrink-0 h-5 w-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
                         <CheckCircle className="h-3 w-3 text-green-600" />
                       </div>
-                      <span className="ml-3 text-gray-600">30 envíos VERI*FACTU</span>
+                      <span className="ml-3 text-gray-600">30 timbres</span>
                     </li>
                     <li className="flex items-start">
                       <div className="flex-shrink-0 h-5 w-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
@@ -302,14 +302,14 @@ export default function PreciosPage() {
                     </div>
                   </div>
 
-                  <p className="mt-4 text-center text-gray-600">50 envíos VERI*FACTU (€0,46 por envío)</p>
+                  <p className="mt-4 text-center text-gray-600">50 timbres (€0,46 por timbre)</p>
 
                   <ul className="mt-6 space-y-3">
                     <li className="flex items-start">
                       <div className="flex-shrink-0 h-5 w-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
                         <CheckCircle className="h-3 w-3 text-green-600" />
                       </div>
-                      <span className="ml-3 text-gray-600">50 envíos VERI*FACTU</span>
+                      <span className="ml-3 text-gray-600">50 timbres</span>
                     </li>
                     <li className="flex items-start">
                       <div className="flex-shrink-0 h-5 w-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
@@ -441,27 +441,26 @@ export default function PreciosPage() {
             className="mt-12 space-y-8"
           >
             <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-navy-900">¿Qué es un envío VERI*FACTU?</h3>
+              <h3 className="text-lg font-semibold text-navy-900">¿Qué es un timbre?</h3>
               <p className="mt-2 text-gray-600">
-                Un envío VERI*FACTU se refiere al proceso por el cual los sistemas informáticos de facturación (SIF)
-                envían de forma segura y automática a la Agencia Tributaria (AEAT) los registros de facturación
-                generados en el momento de emitir cada factura en un formato XML estructurado y cifrado.
+                Un timbre es la unidad que utilizamos para cada factura electrónica que emites. Cada vez que generas una
+                factura, se consume un timbre de tu plan.
               </p>
             </div>
 
             <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-navy-900">¿Los envíos VERI*FACTU caducan?</h3>
+              <h3 className="text-lg font-semibold text-navy-900">¿Los timbres caducan?</h3>
               <p className="mt-2 text-gray-600">
-                No, los envíos VERI*FACTU que adquieres no caducan. Puedes utilizarlos cuando los necesites sin
-                preocuparte por fechas límite. Una vez comprados, permanecen en tu cuenta hasta que los utilices.
+                No, los timbres que adquieres no caducan. Puedes utilizarlos cuando los necesites sin preocuparte por
+                fechas límite. Una vez comprados, permanecen en tu cuenta hasta que los utilices.
               </p>
             </div>
 
             <div className="bg-gray-50 rounded-lg p-6">
               <h3 className="text-lg font-semibold text-navy-900">¿Puedo cambiar de plan en cualquier momento?</h3>
               <p className="mt-2 text-gray-600">
-                Sí, puedes cambiar de plan o adquirir más envíos VERI*FACTU en cualquier momento según tus necesidades.
-                No hay penalizaciones por cambiar entre planes.
+                Sí, puedes cambiar de plan o adquirir más timbres en cualquier momento según tus necesidades. No hay
+                penalizaciones por cambiar entre planes.
               </p>
             </div>
 
