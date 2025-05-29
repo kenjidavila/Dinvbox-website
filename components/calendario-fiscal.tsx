@@ -1,57 +1,53 @@
-"use client"
+import { Badge } from "@/components/ui/badge"
+import { type TipoContribuyente, type EventoFiscalType, eventosFiscales, formatearFecha } from "@/utils/fiscal"
 
-// Componente principal del Calendario Fiscal
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { EventoFiscal } from "@/components/evento-fiscal"
-import { IOSCalendar } from "@/components/ios-calendar"
-import { obtenerProximosEventos } from "@/lib/utils"
-import type { TipoContribuyente } from "@/types"
+// Función para obtener los próximos eventos
+const obtenerProximosEventos = (tipo: TipoContribuyente, limite = 3): EventoFiscalType[] => {
+  const hoy = new Date()
+  // Establecer la hora a 0 para comparar solo fechas, no horas
+  hoy.setHours(0, 0, 0, 0)
 
-export default function CalendarioFiscal() {
-  const [tipoContribuyente, setTipoContribuyente] = useState<TipoContribuyente>("autonomos")
-  const [iosCalendarOpen, setIosCalendarOpen] = useState(false)
+  return eventosFiscales
+    .filter((evento) => {
+      const fechaEvento = new Date(evento.fecha)
+      fechaEvento.setHours(0, 0, 0, 0)
+      return evento.tipo === tipo && fechaEvento >= hoy
+    })
+    .sort((a, b) => a.fecha.getTime() - b.fecha.getTime())
+    .slice(0, limite)
+}
 
-  const proximosEventos = obtenerProximosEventos(tipoContribuyente)
+// Función para verificar si un evento está próximo (dentro de los próximos 7 días)
+const estaProximo = (fecha: Date): boolean => {
+  const hoy = new Date()
+  hoy.setHours(0, 0, 0, 0)
+  const fechaEvento = new Date(fecha)
+  fechaEvento.setHours(0, 0, 0, 0)
+  const diferenciaDias = Math.ceil((fechaEvento.getTime() - hoy.getTime()) / (1000 * 60 * 60 * 24))
+  return diferenciaDias <= 7 && diferenciaDias >= 0
+}
+
+// Componente para un evento fiscal individual
+const EventoFiscal = ({ evento }: { evento: EventoFiscalType }) => {
+  const proximoEvento = estaProximo(evento.fecha)
 
   return (
-    <>
-      {/* Vista previa del calendario */}
-      <div className="divide-y divide-gray-100">
-        {proximosEventos.length > 0 ? (
-          proximosEventos.map((evento) => <EventoFiscal key={evento.id} evento={evento} />)
-        ) : (
-          <div className="p-6 text-center">
-            <p className="text-gray-500">No hay próximos eventos fiscales</p>
-          </div>
-        )}
-      </div>
-
-      <div className="bg-gray-50 p-4 flex items-center justify-between">
-        <p className="text-sm text-gray-600">
-          Próximas fechas importantes para {tipoContribuyente === "autonomos" ? "autónomos" : "sociedades"}
-        </p>
-        <div className="flex gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setTipoContribuyente(tipoContribuyente === "autonomos" ? "sociedades" : "autonomos")}
-            className="text-xs"
-          >
-            Cambiar a {tipoContribuyente === "autonomos" ? "sociedades" : "autónomos"}
-          </Button>
-          <Button variant="outline" size="sm" onClick={() => setIosCalendarOpen(true)} className="text-xs">
-            Ver calendario completo
-          </Button>
+    <div className="flex items-center justify-between p-4 hover:bg-gray-50 transition-colors rounded-lg">
+      <div className="flex items-center">
+        <div
+          className={`h-10 w-10 rounded-full flex items-center justify-center mr-4 
+            ${evento.urgente || proximoEvento ? "bg-red-100 text-red-600" : "bg-blue-100 text-blue-600"}`}
+        >
+          <span className="font-semibold text-sm">{evento.fecha.getDate()}</span>
+        </div>
+        <div>
+          <p className="font-medium text-navy-800">{evento.descripcion}</p>
+          <p className="text-sm text-gray-500">{formatearFecha(evento.fecha)}</p>
         </div>
       </div>
-
-      {/* Calendario estilo iOS */}
-      <IOSCalendar
-        open={iosCalendarOpen}
-        onClose={() => setIosCalendarOpen(false)}
-        tipoContribuyente={tipoContribuyente}
-      />
-    </>
+      {(evento.urgente || proximoEvento) && (
+        <Badge className="bg-red-100 text-red-600 border-red-200">{proximoEvento ? "Próximo" : "Urgente"}</Badge>
+      )}
+    </div>
   )
 }
