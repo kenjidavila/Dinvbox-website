@@ -82,7 +82,7 @@ export default function Header() {
             className="hidden md:flex md:items-center md:space-x-4"
           >
             <Button asChild variant="ghost" className="text-navy-800 hover:text-orange-500 hover:bg-orange-50">
-              <a href="https://testing.dinvbox.es/login" target="_blank" rel="noopener noreferrer">
+              <a href="https://app.dinvbox.es/login" target="_blank" rel="noopener noreferrer">
                 Iniciar Sesión
               </a>
             </Button>
@@ -90,7 +90,7 @@ export default function Header() {
               asChild
               className="bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 text-white shadow-md hover:shadow-lg transition-all duration-300 rounded-full"
             >
-              <a href="https://testing.dinvbox.es/login" target="_blank" rel="noopener noreferrer">
+              <a href="https://app.dinvbox.es/register" target="_blank" rel="noopener noreferrer">
                 Registrarse
               </a>
             </Button>
@@ -149,7 +149,7 @@ export default function Header() {
           </Link>
           <div className="mt-8 space-y-4 pt-4">
             <Button asChild variant="ghost" className="w-full justify-center text-navy-800">
-              <a href="https://testing.dinvbox.es/login" target="_blank" rel="noopener noreferrer">
+              <a href="https://app.dinvbox.es/login" target="_blank" rel="noopener noreferrer">
                 Iniciar Sesión
               </a>
             </Button>
@@ -157,7 +157,7 @@ export default function Header() {
               asChild
               className="w-full justify-center bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 text-white rounded-full"
             >
-              <a href="https://testing.dinvbox.es/login" target="_blank" rel="noopener noreferrer">
+              <a href="https://app.dinvbox.ess/register" target="_blank" rel="noopener noreferrer">
                 Registrarse
               </a>
             </Button>

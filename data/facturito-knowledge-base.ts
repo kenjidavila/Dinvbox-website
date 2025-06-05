@@ -139,7 +139,7 @@ export function findBestMatch(query: string): string {
     query.includes("empezar") ||
     query.includes("comenzar")
   ) {
-    return "Puedes crear una cuenta gratuita en https://testing.dinvbox.es/login y comenzar a utilizar nuestros servicios inmediatamente."
+    return "Puedes crear una cuenta gratuita en https://app.dinvbox.es/login y comenzar a utilizar nuestros servicios inmediatamente."
   }
 
   if (

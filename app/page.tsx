@@ -221,7 +221,7 @@ export default function Home() {
                   size="lg"
                   className="bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 text-white shadow-md hover:shadow-lg transition-all duration-300 rounded-full"
                 >
-                  <a href="https://testing.dinvbox.es/login" target="_blank" rel="noopener noreferrer">
+                  <a href="https://app.dinvbox.es/login" target="_blank" rel="noopener noreferrer">
                     Crea tu cuenta gratis
                   </a>
                 </Button>
@@ -954,7 +954,7 @@ export default function Home() {
                   size="lg"
                   className="bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 text-white shadow-lg hover:shadow-xl transition-all duration-300 rounded-full"
                 >
-                  <a href="https://testing.dinvbox.es/login" target="_blank" rel="noopener noreferrer">
+                  <a href="https://app.dinvbox.es/login" target="_blank" rel="noopener noreferrer">
                     Crear cuenta gratis
                   </a>
                 </Button>
